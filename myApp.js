@@ -1,5 +1,15 @@
+// Imports
 require('dotenv').config();
+const mongoose = require("mongoose");
 
+// Constants
+const URI = process.env.MONGO_URI,
+  MONGOOSE_OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true };
+
+// Mongoose setup
+mongoose.connect(URI, MONGOOSE_OPTIONS, () => {
+  console.log('Connected!')
+});
 
 let Person;
 
