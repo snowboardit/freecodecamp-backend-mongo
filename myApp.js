@@ -1,18 +1,12 @@
 // Imports
-require('dotenv').config();
 const mongoose = require("mongoose");
 
 // Local imports
-const personSchema = require('./schemas/person');
+const personSchema = require("./schemas/person")
 
 // Constants
 const URI = process.env.MONGO_URI,
-  MONGOOSE_OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true },
-  personSchema = new mongoose.Schema({
-    name: String,
-    age: Number,
-    favoriteFoods: [String]
-  })
+  MONGOOSE_OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true };
 
 // Mongoose setup
 mongoose.connect(URI, MONGOOSE_OPTIONS, () => {
@@ -27,15 +21,22 @@ function createAndSavePerson(done) {
     age: 84,
     favoriteFoods: ['Apples', 'Cake', 'Blackberries']
   })
-  person.save((data, err) => {
+  person.save((err, data) => {
     if (err) console.error(err)
+    console.log({ data });
     done(null, data);
   })
 };
 
-const createManyPeople = (arrayOfPeople, done) => {
-  done(null /*, data*/);
-};
+async function createManyPeople(arrayOfPeople, done) {
+  const people = await Person.create(arrayOfPeople, (err, data) => {
+    if (err) console.error(err)
+    console.log({ data });
+    done(null, data);
+  });
+  console.log({ people })
+}
+
 
 const findPeopleByName = (personName, done) => {
   done(null /*, data*/);
@@ -81,7 +82,7 @@ const queryChain = (done) => {
 /* You completed these challenges, let's go celebrate !
  */
 
-//----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------
+/*----- **DO NOT EDIT BELOW THIS LINE** ----------------------------------*/
 
 exports.PersonModel = Person;
 exports.createAndSavePerson = createAndSavePerson;
