@@ -40,13 +40,17 @@ async function createManyPeople(arrayOfPeople, done) {
 const findPeopleByName = (personName, done) => {
   const search = { name: personName };
   Person.find(search, (err, data) => {
-    if (err) console.error(err)
-    done(null, data)
+    if (err) console.error(err);
+    done(null, data);
   })
 };
 
 const findOneByFood = (food, done) => {
-  done(null /*, data*/);
+  const search = { favoriteFoods: food };
+  Person.findOne(search, (err, data) => {
+    if (err) console.error(err);
+    done(null, data);
+  })
 };
 
 const findPersonById = (personId, done) => {
