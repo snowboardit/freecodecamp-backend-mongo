@@ -37,9 +37,12 @@ async function createManyPeople(arrayOfPeople, done) {
   console.log({ people })
 }
 
-
 const findPeopleByName = (personName, done) => {
-  done(null /*, data*/);
+  const search = { name: personName };
+  Person.find(search, (err, data) => {
+    if (err) console.error(err)
+    done(null, data)
+  })
 };
 
 const findOneByFood = (food, done) => {
