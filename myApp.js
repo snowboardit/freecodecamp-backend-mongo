@@ -75,13 +75,24 @@ const findEditThenSave = async (personId, done) => {
 };
 
 const findAndUpdate = (personName, done) => {
-  const ageToSet = 20;
-
-  done(null /*, data*/);
+  const ageToSet = 20,
+    search = { name: personName },
+    update = { age: ageToSet },
+    options = { new: true, useFindAndModify: false };
+  Person.findOneAndUpdate(search, update, options, (err, data) => {
+    if (err) console.error(err);
+    console.log({ data });
+    done(null, data)
+  })
 };
 
-const removeById = (personId, done) => {
-  done(null /*, data*/);
+const removeById = async (personId, done) => {
+  const options = { useFindAndModify: false };
+  await Person.findByIdAndRemove(personId, options, (err, data) => {
+    if (err) console.error(err);
+    console.log(data)
+    done(null, data);
+  })
 };
 
 const removeManyPeople = (done) => {
