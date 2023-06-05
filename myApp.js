@@ -7,7 +7,12 @@ const personSchema = require('./schemas/person');
 
 // Constants
 const URI = process.env.MONGO_URI,
-  MONGOOSE_OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true };
+  MONGOOSE_OPTIONS = { useNewUrlParser: true, useUnifiedTopology: true },
+  personSchema = new mongoose.Schema({
+    name: String,
+    age: Number,
+    favoriteFoods: [String]
+  })
 
 // Mongoose setup
 mongoose.connect(URI, MONGOOSE_OPTIONS, () => {
@@ -16,15 +21,15 @@ mongoose.connect(URI, MONGOOSE_OPTIONS, () => {
 
 let Person = mongoose.model('Person', personSchema);
 
-const createAndSavePerson = (done) => {
+function createAndSavePerson(done) {
   const person = new Person({
     name: 'Jane Fonda',
-    age: 62,
+    age: 84,
     favoriteFoods: ['Apples', 'Cake', 'Blackberries']
   })
   person.save((data, err) => {
     if (err) console.error(err)
-    done(null, data)
+    done(null, data);
   })
 };
 
